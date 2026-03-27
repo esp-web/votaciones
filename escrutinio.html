@@ -14,6 +14,19 @@
   <div class="card">
     <h1>⚖️ Escrutinio de Votación</h1>
 
+    <!-- Banner de recuperación (visible solo si existe un backup en localStorage) -->
+    <div id="recovery-banner" style="display:none" class="recovery-banner">
+      <div class="recovery-icono">⚠️</div>
+      <div class="recovery-body">
+        <strong>Se detectó una votación interrumpida</strong>
+        <span id="recovery-info"></span>
+      </div>
+      <div class="recovery-botones">
+        <button type="button" id="btn-recuperar">Recuperar</button>
+        <button type="button" id="btn-descartar-backup">Descartar</button>
+      </div>
+    </div>
+
     <label for="inp-titulo">Título / Descripción de la votación</label>
     <input type="text" id="inp-titulo"
            placeholder="Ej: Elección de representante de claustro 2026">
@@ -45,7 +58,10 @@
 <!-- ══ PANTALLA 2: ESCRUTINIO EN VIVO ═════════════════════════════════ -->
 <section id="esc" class="pantalla">
   <header id="esc-header">
-    <div id="esc-titulo"></div>
+    <div class="esc-header-izq">
+      <div id="esc-titulo"></div>
+      <div id="guardado-estado" class="guardado-estado"></div>
+    </div>
     <div id="esc-stats">
       <div class="stat">
         <div class="stat-num" id="stat-total">0</div>
@@ -72,7 +88,7 @@
       <hr class="separador">
 
       <button type="button" class="btn-accion btn-deshacer"  id="btn-deshacer">↩ Deshacer último voto</button>
-      <button type="button" class="btn-accion btn-exportar"  id="btn-exportar">💾 Guardar en Excel</button>
+      <button type="button" class="btn-accion btn-exportar"  id="btn-exportar">💾 Descargar copia Excel</button>
       <button type="button" class="btn-accion btn-finalizar" id="btn-finalizar">✔ Finalizar escrutinio</button>
 
       <div id="electores-panel" style="display:none">
