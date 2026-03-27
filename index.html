@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escrutinio de Votación</title>
+  <link rel="stylesheet" href="escrutinio.css">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<!-- ══ PANTALLA 1: CONFIGURACIÓN ══════════════════════════════════════ -->
+<section id="cfg" class="pantalla activa">
+  <div class="card">
+    <h1>⚖️ Escrutinio de Votación</h1>
+
+    <!-- Banner de recuperación (visible solo si existe un backup en localStorage) -->
+    <div id="recovery-banner" style="display:none" class="recovery-banner">
+      <div class="recovery-icono">⚠️</div>
+      <div class="recovery-body">
+        <strong>Se detectó una votación interrumpida</strong>
+        <span id="recovery-info"></span>
+      </div>
+      <div class="recovery-botones">
+        <button type="button" id="btn-recuperar">Recuperar</button>
+        <button type="button" id="btn-descartar-backup">Descartar</button>
+      </div>
+    </div>
+
+    <label for="inp-titulo">Título / Descripción de la votación</label>
+    <input type="text" id="inp-titulo"
+           placeholder="Ej: Elección de representante de claustro 2026">
+
+    <label>Fichero Excel de la votación</label>
+    <div class="excel-zona">
+      <input type="file" id="inp-excel" accept=".xlsx,.xls">
+      <label for="inp-excel" class="btn-excel">📂 Seleccionar fichero Excel</label>
+      <button type="button" class="btn-plantilla" id="btn-plantilla">
+        ⬇ Descargar plantilla
+      </button>
+    </div>
+    <p class="excel-hint">
+      El fichero debe tener dos hojas: <strong>Candidatos</strong> y <strong>Electores</strong>.
+    </p>
+
+    <!-- Vista previa tras cargar el Excel -->
+    <div id="preview" style="display:none">
+      <div class="preview-grid">
+        <div class="preview-bloque" id="prev-candidatos"></div>
+        <div class="preview-bloque" id="prev-electores"></div>
+      </div>
+    </div>
+
+    <button type="button" class="btn-iniciar" id="btn-iniciar">Iniciar escrutinio</button>
+  </div>
+</section>
+
+<!-- ══ PANTALLA 2: ESCRUTINIO EN VIVO ═════════════════════════════════ -->
+<section id="esc" class="pantalla">
+  <header id="esc-header">
+    <div class="esc-header-izq">
+      <div id="esc-titulo"></div>
+      <div id="guardado-estado" class="guardado-estado"></div>
+    </div>
+    <div id="esc-stats">
+      <div class="stat">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-lbl">Votos emitidos</div>
+      </div>
+      <div class="stat" id="stat-pendientes-wrap" style="display:none">
+        <div class="stat-num" id="stat-pendientes">—</div>
+        <div class="stat-lbl">Sin escrutar</div>
+      </div>
+      <div class="stat" id="stat-electores-wrap" style="display:none">
+        <div class="stat-num" id="stat-electores-val">0/0</div>
+        <div class="stat-lbl">Han votado</div>
+      </div>
+    </div>
+  </header>
+
+  <div id="esc-cuerpo">
+    <div id="panel-resultados"></div>
+
+    <aside id="panel-control">
+      <h3>Registrar voto</h3>
+      <div id="botones-voto"></div>
+
+      <hr class="separador">
+
+      <button type="button" class="btn-accion btn-deshacer"  id="btn-deshacer">↩ Deshacer último voto</button>
+      <button type="button" class="btn-accion btn-exportar"  id="btn-exportar">💾 Descargar copia Excel</button>
+      <button type="button" class="btn-accion btn-finalizar" id="btn-finalizar">✔ Finalizar escrutinio</button>
+
+      <div id="electores-panel" style="display:none">
+        <hr class="separador">
+        <h3>Electores <span id="electores-count" class="badge">0/0</span></h3>
+        <div id="lista-electores"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ══ PANTALLA 3: RESULTADOS FINALES ════════════════════════════════ -->
+<section id="fin" class="pantalla">
+  <div class="card">
+    <h1>Resultados Finales</h1>
+    <p class="subtitulo-fin" id="fin-subtitulo"></p>
+    <div id="fin-tabla"></div>
+    <div id="fin-botones">
+      <button type="button" id="btn-nueva">Nueva votación</button>
+      <button type="button" id="btn-excel-fin">💾 Exportar Excel</button>
+    </div>
+  </div>
+</section>
+
+<div id="toast"></div>
+
+<script src="escrutinio.js" defer></script>
+</body>
+</html>
