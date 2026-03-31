@@ -614,7 +614,8 @@ function renderizarResultados(nombreFlash = null) {
     const esLider = c.votos > 0 && c.votos === lideres;
 
     const card = document.createElement("div");
-    card.className = "candidato-card" + (esLider ? " ganador" : "");
+    const claseExtra = esLider ? " ganador" : c.votos === 1 ? " rezagado" : "";
+    card.className = "candidato-card" + claseExtra;
     card.innerHTML = `
       <div class="cand-nombre">${c.nombre}</div>
       <div class="cand-votos">${c.votos}</div>
