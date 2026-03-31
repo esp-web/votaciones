@@ -1,6 +1,7 @@
 :root {
   --azul: #0d1b4b;
   --azul2: #1a2e6b;
+  --fondo: #0a1438;
   --dorado: #f0c040;
   --blanco: #f4f6ff;
   --gris: #8090b0;
@@ -356,6 +357,12 @@ input:focus {
   border: 2px solid var(--dorado);
   background: #1f3585;
 }
+.candidato-card.rezagado .cand-votos {
+  color: rgba(240, 192, 64, 0.35);
+}
+.candidato-card.rezagado .cand-barra {
+  background: rgba(240, 192, 64, 0.25);
+}
 .candidato-card.flash {
   animation: flash 0.35s ease-out;
 }
@@ -416,7 +423,7 @@ input:focus {
 
 /* Panel control */
 #panel-control {
-  background: #0a1438;
+  background: var(--fondo);
   padding: 20px 16px;
   display: flex;
   flex-direction: column;
@@ -432,8 +439,17 @@ input:focus {
   scrollbar-width: thin; /* Firefox: delgada */
   scrollbar-color: white transparent;
   overflow: scroll;
-  -webkit-box-shadow: inset 1px -29px 26px -15px #ffffff;
-  box-shadow: inset 1px -29px 26px -15px #ffffff;
+}
+.panel-control__contenedor::after {
+  -webkit-box-shadow: inset 1px -29px 26px -15px var(--fondo);
+  box-shadow: inset 1px -29px 26px -15px var(--fondo);
+  content: "";
+  display: block;
+  top: 0%;
+  left: 0;
+  transform: translateY(-100%);
+  width: 100%;
+  height: 50px;
 }
 
 #panel-control h3 {
